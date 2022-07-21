@@ -1,0 +1,48 @@
+{% extends 'auctions/layout.html' %}{% load static %}
+{% block title%}{{category}} category{% endblock %} 
+{% block body %}
+
+
+<!-- Specific Category -->
+
+<h4 class="title">{{category}} category</h4>
+
+<!-- Listings Cards -->
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for list in listings %}
+  
+  
+    <div class="col">
+      <div class="card h-100">
+        <div class="card-image">
+          {% if list.picture %}
+          <img class="img-thumbnail card-img-top" src="{{ list.picture.url }}" alt="picture of the list" />
+          {% else %}
+          <img class="img-thumbnail card-img-top" src="{% static 'no image avalible.jpg' %}" alt="no image">
+          {% endif %}
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+          <h4 class="card-title">{{list.title|title|truncatechars:16}}</h4>
+          <p class="card-text">{{list.description|capfirst|truncatechars:180}}</p>
+          <p class="card-text">Price: {{list.price}} SAR <i class="fa fa-money" style="color:#f335b7"></i></p>
+        </div>
+        <div class="card-footer">
+          <a role="button" class="btn btn-primary" href="{% url 'listing_details' list.id %}">Details</a>
+        </div>
+      </div>
+    </div>
+  
+
+    {% empty %}
+    <h4>NO listings yet!</h4>
+    {% endfor %}
+  </div>
+  <!--end of cards-->
+
+  <br>  <br>
+  <a href="{% url 'all_categories' %}" role="button" class="fixed-btn btn btn-primary">
+    Categories
+</a>
+
+{% endblock %}

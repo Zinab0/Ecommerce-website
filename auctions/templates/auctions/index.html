@@ -1,0 +1,59 @@
+{% extends "auctions/layout.html" %}
+{% block title%}Auctions{% endblock %}
+{% block body %} {% load static %}
+<img src="{% static 'welcome5.gif' %}" alt="Welcome" class="img-responsive " id="welcome_image" />
+
+<!-- Active Listings -->
+
+<h3 class="title">--- Active Listings ---</h3>
+
+
+<!-- Listings Cards -->
+<div class="row row-cols-1 row-cols-md-4 g-4">
+  {% for list in listings %}
+
+
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-image">
+        {% if list.picture %}
+        <img class="img-thumbnail card-img-top" src="{{ list.picture.url }}" alt="picture of the list" />
+        {% else %}
+        <img class="img-thumbnail card-img-top" src="{% static 'no image avalible.jpg' %}" alt="no image">
+        {% endif %}
+      </div>
+      <!-- Card Body -->
+      <div class="card-body">
+        <h4 class="card-title">{{list.title|title|truncatechars:20}}</h4>
+        <p class="card-text">{{list.description|capfirst|truncatechars:180}}</p>
+        <p class="card-text">Price: {{list.price}} SAR <i class="fa fa-money" style="color:#f335b7"></i></p>
+      </div>
+      <div class="card-footer">
+        <a role="button" class="btn btn-primary" href="{% url 'listing_details' list.id %}">Details</a>
+      </div>
+    </div>
+  </div>
+
+
+  {% empty %}
+  <div class="text-center">
+  <h4>NO listings yet, be the first!</h4>
+  </div>
+  {% endfor %}
+</div>
+<!--end of cards-->
+<footer class="index-footer">
+  <section class="contact-links">
+    <br><br>
+    <i class="fa-solid fa-envelope fa-2xl"></i>
+    <ul class="ul-footer">
+      <li>
+        Send an email to the developer:
+        <a href="mailto:zinabalsaggaf@gmail.com" target="_blank"> zinabalsaggaf@gmail.com 
+        </a>
+      </li>
+    </ul>
+  </section>
+
+</footer>
+{% endblock %}

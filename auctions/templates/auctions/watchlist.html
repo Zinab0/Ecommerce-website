@@ -1,0 +1,36 @@
+{% extends 'auctions/layout.html' %}{% load static %}
+{% block title%}{{user.username}}'s Watchlist{% endblock %} {% block body %}
+
+
+<p>Number of watchlist items: {{watchlistNum}}</p>
+
+<!-- Horizontal Cards Watchlist -->
+<div class="row row-cols-1 row-cols-md-2 g-4">
+{% for watchlist in userWatchlist %}
+<div class="col">
+<a href="{% url 'listing_details' watchlist.listing.id %}">
+<div class="card mb-3 h-100">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <!--Image-->
+      {% if watchlist.listing.picture %}
+        <img src="{{watchlist.listing.picture.url}}" alt="picture of the listing" class="img-fluid rounded-start" />
+      {% else %}
+        <img class="img-fluid rounded-start" src="{% static 'no image avalible.jpg' %}" alt="no image">
+      {% endif %}
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{watchlist.listing|title}}</h5>
+        <p class="card-text">{{watchlist.listing.description|capfirst|truncatechars:250}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+  </a> 
+</div>
+{% endfor %}
+</div>
+
+
+{% endblock %}

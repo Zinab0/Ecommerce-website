@@ -1,0 +1,226 @@
+{% extends 'auctions/layout.html' %}{% load static %}
+{% block title%}{{listing.title}} Details Listing {% endblock %} {% block body %}
+
+<!--Title-->
+<h3 class="title">~~~ {{listing.title|title}} ~~~</h3>
+{% if not listing.active %}
+
+<div style="color:grey ;">
+
+<div class="box">
+  <!--Image-->
+  <div class="left-box">
+    {% if listing.picture %}
+    <img src="{{listing.picture.url}}" alt="picture of the listing" class="img-thumbnail " />
+    {% else %}
+    <img src="{% static 'no image avalible.jpg' %}" alt="no image" class=" img-thumbnail ">
+    {% endif %}
+    
+  </div>
+
+  <!-- Right Box -->
+  <div class="right-box">
+    <!--Description-->
+    <h5>Description:</h5>
+    <div class="info-description">
+      <p>{{listing.description}}</p>
+    </div>
+
+    <!--Category-->
+    <hr>
+    <h5>Category:</h5>
+    {{listing.category}}
+
+
+    <!--Price-->
+    <hr>
+    <h5>Current price:</h5>
+    {{listing.price}} SAR
+
+
+<!-- Seller -->
+<hr>
+    <h5>Seller:</h5>
+    {{listing.auctioneer}}
+
+
+
+  </div>
+</div>
+  <br><br>
+
+
+</div>
+
+<!--Winner Announcement-->
+
+{% if listing.buyer %}
+<div class="text-center">
+  <img src="{% static 'winner.gif' %}" alt="winner" style="box-shadow:none ;"/>
+  <h5>The auction is closed and the winner is...</h5>
+  <h3>{{listing.buyer|capfirst}} 🎉</h3>
+  <h5> with a price reached to <strong>{{listing.price}}</strong> Riyals</h5>
+</div>
+{% else %}
+<h5>The auction is closed with no buyers</h5>
+{% endif %}
+<br><br>
+
+<!--Home Button-->
+<a href="{% url 'index' %}" class="btn btn-primary" role="button">Home</a>
+<br><br>
+
+{%else%}
+
+
+<!-- Active Listings -->
+   <!--watchlist form-->
+    {% if userWatchlist %}
+    <!-- if listing exist in watchlist the user will be able to delete it..if not the he will be able to add it -->
+    <form action="{% url 'delete_watchlist' listing.id %}" method="post">
+      {% csrf_token %}
+      <div class="text-right"> 
+
+      <button type="submit" name="listing.id" value="{{listing.id}}" class="watchlist-btn btn btn-outline-primary">
+        Delete from watchlist <i class="fa-solid fa-list-ul"></i>
+      </button>
+      </div>
+    </form>
+    {% else %}
+    <form action="{% url 'add_watchlist' listing.id %}" method="post">
+      {% csrf_token %}
+      <div class="text-right"> 
+
+      <button type="submit" name="listing.id" value="{{listing.id}}" class="watchlist-btn btn btn-primary">
+        Add to watchlist <i class="fa-solid fa-list"></i>
+      </button>
+      </div>
+    </form>
+    {% endif %}
+<div class="box">
+
+  <!--Image-->
+  <div class="left-box">
+    <div style="overflow: hidden;">
+    {% if listing.picture %}
+    <img src="{{listing.picture.url}}" alt="picture of the listing" class="mx-auto d-block img-thumbnail" />
+    {% else %}
+    <img src="{% static 'no image avalible.jpg' %}" alt="no image" class="mx-auto d-block img-thumbnail " >
+    {% endif %}
+   </div>
+  </div>
+
+  <!-- Right Box -->
+  <div class="right-box">
+    <!--Description-->
+    <h5>Description:</h5>
+    <div class="info-description">
+      <p>{{listing.description}}</p>
+    </div>
+
+    <!--Category-->
+    <hr>
+    <h5>Category:</h5>
+    {{listing.category}}
+
+
+    <!--Price-->
+    <hr>
+    <h5>Current price:</h5>
+    {{listing.price}} SAR
+
+    <!-- Seller -->
+<hr>
+<h5>Seller:</h5>
+@{{listing.auctioneer}}
+
+  </div>
+
+</div>
+<br><br>
+
+<!--Bids Table-->
+{% if bids.exists %}
+<div style="margin: 5px;" class="table-responsive-sm">
+  <table class="table table-secondary table-hover">
+    <thead>
+      Number of bits is {{bidsNum}} and the last 5 bids on the listing
+    </thead>
+    <tr class="table table-secondary ">
+      <th scope="col" class="table-secondary ">User</th>
+      <th scope="col" class="table-secondary ">Bid</th>
+    </tr>
+    {% for bid in bids reversed%}
+    <tr class="table-secondary ">
+      <td class="table-secondary " scope="row">{{bid.user|capfirst}}</td>
+      <td class="table-secondary ">{{bid.price}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% else %}
+<h4>No bids yet </h4>
+{% endif %}
+<!--Bidding Button-->
+
+<a href="{% url 'place_bid' listing.id %}" class="btn btn-primary " role="button">
+  Place a bid
+</a>
+
+<hr />
+
+<!--Comments-->
+{% if comment %}
+<div style="margin: 5px">
+  <table class="table">
+    <thead>
+      Comments
+    </thead>
+    <tr>
+      <th scope="col">User</th>
+      <th scope="col">Comment</th>
+    </tr>
+    {% for c in comment %}
+    <tr>
+      <td scope="row">{{c.user|capfirst}}</td>
+      <td>{{c.comment}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <h4>No comments yet</h4>
+</div>
+{% endif %}
+
+<!--Comment button-->
+<a href="{% url 'comment' listing.id %}" class="btn btn-primary" role="button">Comment</a>
+
+<hr>
+
+<!--Close listing button-->
+<h4>The auction creator is able to close the bid</h4>
+{% if user == listing.auctioneer and listing.active %}
+<form action="{% url 'close_auction' listing.id %}" method="post">
+  {% csrf_token %}
+  <button type="submit" name="listing.id" value="{{listing.id}}" class="btn btn-warning">
+    close auction
+  </button>
+</form>
+{% else %}
+<button disabled="disabled" class="btn btn-warning">close auction</button>
+{% endif %}
+<hr>
+
+
+
+
+
+
+<!--Home button-->
+<a href="{% url 'index' %}" class="fixed-btn btn btn-primary" role="button">Active Listings</a>
+
+{% endif %}
+
+
+
+{% endblock %}

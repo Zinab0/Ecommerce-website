@@ -1,0 +1,21 @@
+{% extends 'auctions/layout.html' %}{% load static %}
+{% block title%}Comment on {{listing.title}}{% endblock %} {% block body %}
+
+
+<!--Comment Form-->
+<form action="{% url 'comment' listing.id %}" method="post">
+  {% csrf_token %}
+
+  <table>
+    {{form.as_table}}
+  </table>
+
+  <br />
+  <input class="btn btn-primary" type="submit" value="Submit" />
+</form>
+
+
+
+
+
+{% endblock %}

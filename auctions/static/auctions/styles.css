@@ -1,0 +1,152 @@
+body {
+  --bodyColor: #E6E6FA;
+  padding: 10px;
+  background-color: var(--bodyColor);
+}
+
+ul {
+  list-style-type: none;
+  width: auto;
+}
+.active-listings {
+  margin: 10px;
+}
+
+.title {
+  font-family: "Courier New", Courier, monospace;
+  color: #33006F;
+  font-weight: bold;
+  text-align: center;
+  margin: 40px;
+  margin-bottom: 50px;
+  position: relative;
+  background-image: linear-gradient(to right, #452c63, #b393d3);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+
+}
+.image_listing {
+  width: 50%;
+  height: 50%;
+  float: left;
+  margin-right: 10px;
+}
+
+img {
+  border: none;
+  border-radius: 5px;
+  float: left;
+    width:  100%;
+    height: 100%;
+    object-fit: cover;
+}
+img:hover {
+  box-shadow: 4px 0px 7px #cccce9;
+}
+
+#welcome_image{
+  max-width: 40%;
+  height: auto;
+  border: none;
+  box-shadow: none;
+  margin-bottom: 20px;
+  display: block;
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+.index-footer{
+  background-color: #1d1160;
+  color: #fff;
+  padding: 0 0 2rem;
+  display: block;
+  margin-top: 3rem;
+  border-radius: 0.1rem;
+  box-shadow: 0 2px 5px 0 #1d1160;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+.contact-links{
+  box-sizing: content-box;
+  max-width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1 1rem;
+  position: relative;
+  text-align: center;
+}
+
+.ul-footer{
+  width: 100%;
+  position: relative;
+  margin-top: 1em;
+  list-style: none;
+}
+
+
+/* Cards */
+.card{
+  background-color: #e0e0fc;
+  border: none;
+  margin-top: 1rem;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.432);
+  overflow: hidden;
+  color: black;
+}
+.card:hover{
+  margin: 0%;
+}
+/* categories */
+.li-categories{
+  list-style: georgian inside url("/static/steering-wheel.png");
+  padding: 5px 10px;
+  font-family: 'Anek Malayalam', sans-serif;
+  font-size: 2rem;
+}
+
+.left-box{
+  width: 35%;  
+  position: relative;
+  /* border: solid 1px #75218f; */
+}
+.right-box{
+  width: 65%;
+  word-break: break-all;
+  padding: 0 1rem;
+  /* border: solid 1px #1d1160; */
+  
+}
+.box{
+  justify-content: space-between;
+  display: flex;
+}
+.info-description{
+  display: block;
+}
+
+.left-box > img{
+  position: absolute;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+
+}
+p {
+  /* overflow:auto; --> Scroller */
+  white-space: pre-wrap;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+.fixed-btn{
+  position: static;
+  bottom: 0px;
+  left: 0px;
+  margin: 5px;
+}
+
+
+
